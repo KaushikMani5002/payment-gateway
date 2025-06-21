@@ -1,0 +1,29 @@
+.title,
+.sub-title{
+    font-size: 40px;
+}
+
+.sub-title {
+    color: cornflowerblue;
+}
+
+.pg-info {
+    font-size: 20px;
+    line-height: 1.8;
+}
+
+.slow-reveal {
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 1s ease;
+    max-width: 100%;
+}
+
+.slow-reveal.loaded {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* @media(min-width: 550px) {
+    
+} */

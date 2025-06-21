@@ -1,0 +1,200 @@
+<div class="row h-100 align-items-center justify-content-center">
+    <div class="left-section col-xl-7 col-lg row p-4">
+        <div class="heading">
+            <p class="title poppins-bold">
+                WowPe Payment Gateway
+            </p>
+            <p class="sub-title poppins-bold">
+                Building better payment experiences!
+            </p>
+        </div>
+        <div class="text-content">
+            <p class="pg-info">
+                WowPe payment gateway is a robust and secure payment gateway ideal for Indian businesses, built to
+                easily support large volumes of transactions with zero compromises on customer experience.
+            </p>
+            <p class="pg-info">
+                WowPe Payment Gateway empowers businesses to provide seamless, secure, and scalable payment solutions.
+                With a global reach and local expertise, WowPe enables businesses of all sizes to accept payments
+                effortlessly, ensuring a smooth experience for both businesses and customers alike.
+            </p>
+        </div>
+        <div class="action">
+            <button class="cta-btn fw-500" (click)="initiatePayment(payment)">Try out UPI Payments</button>
+        </div>
+
+        <!-- Modal Start -->
+
+        <ng-template #payment let-modal>
+            @if(currentTransactionStatus == 'NOT_STARTED' || currentTransactionStatus == 'IN_PROGRESS'){
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Make secure payments powered by UPI</h1>
+                    <button type="button" class="btn-close" aria-label="Close"
+                        (click)="modal.dismiss('Cross click')"></button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="paymentForm">
+                        <!-- Senders UPI ID -->
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" ngbAutoFocus placeholder="sender-123@ybl" formControlName="sender_vpa" [class.invalid]="sender_vpa?.dirty && sender_vpa?.errors">
+                            <label for="sender_vpa">Sender's UPI ID</label>
+                            @if(sender_vpa?.dirty && sender_vpa?.errors){
+                                @if(sender_vpa?.errors?.['required']){
+                                    <div class="error">
+                                        Sender's UPI ID is required
+                                    </div>
+                                }
+                                @else if(sender_vpa?.errors?.['invalid_upi']){
+                                    <div class="error">
+                                        Invalid UPI ID
+                                    </div>
+                                }
+                            }
+                        </div>
+                        <!-- Recipients Name -->
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" placeholder="Kaushik" formControlName="receiver_name" [class.invalid]="receiver_name?.dirty && receiver_name?.errors">
+                            <label for="receiver_name">Receiver's Name</label>
+                            @if(receiver_name?.dirty && receiver_name?.errors && receiver_name?.errors?.['required']){
+                                <div class="error">
+                                    Receiver's Name is required
+                                </div>
+                            }
+                        </div>
+                        <!-- Receivers UPI ID -->
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" placeholder="receiver-123@ybl" formControlName="receiver_vpa" [class.invalid]="receiver_vpa?.dirty && receiver_vpa?.errors">
+                            <label for="receiver_vpa">Receiver's UPI ID</label>
+                            @if(receiver_vpa?.dirty && receiver_vpa?.errors){
+                                @if(receiver_vpa?.errors?.['required']){
+                                    <div class="error">
+                                        Receiver's UPI ID is required
+                                    </div>
+                                } @else if (receiver_vpa?.errors?.['invalid_upi']){
+                                    <div class="error">
+                                        Invalid UPI ID
+                                    </div>
+                                }
+                            }
+                        </div>
+                        <!-- Transaction Amount -->
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" placeholder="4,500" formControlName="amount" OnlyNumber [class.invalid]="amount?.dirty && amount?.errors">
+                            <label for="amount">Amount</label>
+                            @if(amount?.dirty && amount?.errors){
+                                @if(amount?.errors?.['min']){
+                                    <div class="error">
+                                        Invalid Amount
+                                    </div>
+                                } @else if(amount?.errors?.['max']){
+                                    <div class="error">
+                                        Transaction limit per day is ₹ 1,00,000
+                                    </div>
+                                } @else if(amount?.errors?.['required']){
+                                    <div class="error">
+                                        Amount is required
+                                    </div>
+                                }
+                            }
+                        </div>
+                        <!-- Notes -->
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" placeholder="Notes" formControlName="transaction_notes" [class.invalid]="transaction_notes?.dirty && transaction_notes?.errors">
+                            <label for="transaction_notes">Transaction Notes</label>
+                            @if(transaction_notes?.dirty && transaction_notes?.errors?.['required']){
+                                <div class="error">
+                                    Transaction Notes is required
+                                </div>
+                            }
+                        </div>
+                        @if(!paymentForm.errors && formSubmitted.value){
+                            <!-- UPI PIN -->
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control password" placeholder="123456" maxlength="6" [formControl]="upiPIN" OnlyNumber [class.invalid]="upiPIN.dirty && upiPIN.errors">
+                                <label for="transaction_notes">6 digit UPI PIN</label>
+                                @if(upiPIN.dirty && upiPIN.errors){
+                                    <div class="error">
+                                        UPI PIN must be 6 digits
+                                    </div>
+                                }
+                            </div>
+                        }
+                        <div class="row justify-content-center">
+                            <button class="cta-btn mw-mc" (click)="pay()" tabindex="1" [disabled]="(!paymentForm.disabled && !paymentForm.valid) || (paymentForm.disabled && !upiPIN.valid)">
+                                <span>
+                                    {{transactionInProgress.value ? 'Please wait' : 'Proceed'}}
+                                </span>
+                                @if(showLoader){
+                                    <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                                }
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            } @else {
+                <!-- Transaction is completed (Success / Failure) -->
+                <div class="modal-body">
+                    @if(currentTransactionStatus == 'SUCCESS'){
+                        <!-- Success Image -->
+                         <div class="d-flex justify-content-center flex-column align-content-center align-items-center">
+                            <div class="col justify-items-center">
+                                <h2 class="mw-mc poppins-bold colour">Transaction Successful!</h2>
+                                <div class="success-image mw-mc">
+                                    <img src="../../../assets/images/transaction_success.gif" alt="Transaction Success">
+                                </div>
+                            </div>
+                         </div>
+                    } @else if (currentTransactionStatus == 'FAILED') {
+                        <!-- Failure Image -->
+                        <div class="d-flex justify-content-center flex-column align-content-center align-items-center">
+                            <div class="col justify-items-center">
+                                <h2 class="mw-mc poppins-bold colour"> Transaction Failed!</h2>
+                                <div class="success-image mw-mc">
+                                    <img src="../../../assets/images/transaction_failure.gif" alt="Transaction Failed">
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <div class="row justify-content-center">
+                        <button class="cta-btn mw-mc" (click)="modal.close()">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            }
+        </ng-template>
+
+        <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModal" aria-hidden="true"
+            #paymentModal>
+            <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <!-- <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Make secure payments powered by UPI</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div> -->
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="heading">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Make secure payments powered by
+                                        UPI</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="close">
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal End -->
+    </div>
+    <div class="right-section col-xl-5 col-lg row p-4">
+        <img src="../../../assets/images/beyond-img.png" alt="WowPe Payment Gateway" class="slow-reveal"
+            [class.loaded]="imageLoaded" (load)="onImageLoad()">
+    </div>
+</div>

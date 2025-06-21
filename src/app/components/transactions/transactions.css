@@ -1,0 +1,23 @@
+.heading {
+    font-size: 40px;
+    padding: 12px;
+}
+
+table,
+.mat-mdc-paginator
+{
+    background-color: #fff;
+    font-family: 'Poppins';
+}
+
+th{
+    font-family: 'Poppins';
+    font-weight: 600;
+    color: cornflowerblue;
+    line-height: 1.8;
+    font-size: 18px;
+}
+
+td {
+    font-family: 'Poppins';
+}

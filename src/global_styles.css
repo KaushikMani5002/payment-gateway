@@ -1,0 +1,202 @@
+/* Add application styles & imports to this file! */
+@font-face {
+  font-family: 'password';
+  font-style: normal;
+  font-weight: 400;
+  src: url('assets/fonts/password.ttf');
+}
+
+.mw-mc {
+    max-width: max-content;
+}
+
+body{
+    font-family: 'Poppins';
+}
+
+.header {
+    height: 64px;
+}
+
+.pointer{
+  cursor: pointer;
+}
+
+.cta-btn {
+  border: 2px solid cornflowerblue;
+  background: cornflowerblue;
+  padding: 10px;
+  border-radius: 5px;
+  color: #FFF;
+  opacity: 1;
+}
+
+.colour {
+  color: cornflowerblue;
+}
+
+.justify-items-center{
+  justify-items: center;
+}
+
+.invalid {
+  border: 1px solid red;
+}
+
+.cta-btn:disabled{
+  opacity: 0.5;
+  cursor: default;
+}
+
+input:focus {
+  border: 1px solid #dee2e6;
+  border-color: #dee2e6;
+  box-shadow: none !important;
+}
+
+.fw-500{
+  font-weight: 500;
+}
+
+.fw-400{
+  font-weight: 400;
+}
+
+.fw-600{
+  font-weight: 600;
+}
+
+.grey{
+  color: darkslategray;
+}
+
+.fs-30{
+  font-size: 30px;
+}
+
+.ml-0{
+  margin-left: 0;
+}
+
+.mr-0{
+  margin-right: 0;
+}
+
+.error{
+  color: red;
+}
+
+/* Font Family Poppins */
+.poppins-thin {
+  font-family: "Poppins", sans-serif;
+  font-weight: 100;
+  font-style: normal;
+}
+
+.poppins-extralight {
+  font-family: "Poppins", sans-serif;
+  font-weight: 200;
+  font-style: normal;
+}
+
+.poppins-light {
+  font-family: "Poppins", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.poppins-regular {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.poppins-medium {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.poppins-semibold {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.poppins-bold {
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.poppins-extrabold {
+  font-family: "Poppins", sans-serif;
+  font-weight: 800;
+  font-style: normal;
+}
+
+.poppins-black {
+  font-family: "Poppins", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+}
+
+.poppins-thin-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 100;
+  font-style: italic;
+}
+
+.poppins-extralight-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 200;
+  font-style: italic;
+}
+
+.poppins-light-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 300;
+  font-style: italic;
+}
+
+.poppins-regular-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.poppins-medium-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.poppins-semibold-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.poppins-bold-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.poppins-extrabold-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 800;
+  font-style: italic;
+}
+
+.poppins-black-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 900;
+  font-style: italic;
+}
+
+.password{
+  font-family: 'password';
+  letter-spacing: 2px;
+}
+

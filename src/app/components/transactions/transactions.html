@@ -1,0 +1,72 @@
+<div class="d-flex flex-column mt-5">
+    <h2 class="poppins-bold colour heading">All Transactions</h2>
+    <div class="container m-0 mt-4 mw-100">
+        @if(transactions.data.length){
+            <div class="row justify-content-end w-100">
+                <div class="input-group mb-3 mw-mc w-50">
+                    <input type="text" class="form-control" placeholder="Search Name or Remarks" aria-label="Search"
+                        aria-describedby="basic-addon2" [formControl]="search">
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="mat-elevation-z8">
+                        <table mat-table [dataSource]="searchInProgress ? searchResults : transactions">
+                            <!-- Date -->
+                            <ng-container matColumnDef="date">
+                                <th mat-header-cell *matHeaderCellDef> Date </th>
+                                <td mat-cell *matCellDef="let element"> {{element.date | date}} </td>
+                            </ng-container>
+                
+                            <!-- Receiver's Name -->
+                            <ng-container matColumnDef="recipientName">
+                                <th mat-header-cell *matHeaderCellDef> Receiver's Name </th>
+                                <td mat-cell *matCellDef="let element"> {{element.recipientName}} </td>
+                            </ng-container>
+                
+                            <!-- Receiver's UPI ID -->
+                            <ng-container matColumnDef="recipientUpiID">
+                                <th mat-header-cell *matHeaderCellDef> Receiver's UPI ID </th>
+                                <td mat-cell *matCellDef="let element"> {{element.recipientUpiID}} </td>
+                            </ng-container>
+    
+                            <!-- Remarks -->
+                            <ng-container matColumnDef="notes">
+                                <th mat-header-cell *matHeaderCellDef> Remarks </th>
+                                <td mat-cell *matCellDef="let element"> {{element.notes}} </td>
+                            </ng-container>
+    
+                            <!-- Amount -->
+                            <ng-container matColumnDef="amount">
+                                <th mat-header-cell *matHeaderCellDef> Amount </th>
+                                <td mat-cell *matCellDef="let element"> {{element.amount | formatIndianRupee}} </td>
+                            </ng-container>
+    
+                            <!-- Status -->
+                            <ng-container matColumnDef="status">
+                                <th mat-header-cell *matHeaderCellDef> Transaction Status </th>
+                                <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+                            </ng-container>
+                
+                            <tr mat-header-row *matHeaderRowDef="headers"></tr>
+                            <tr mat-row *matRowDef="let row; columns: headers;"></tr>
+                        </table>
+                
+                        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                            aria-label="Select Page">
+                        </mat-paginator>
+                    </div>
+                </div>
+            </div>
+        } @else {
+            <div class="not-found d-flex flex-column">
+                <span class="main-text fw-600 fs-30 grey">
+                    No Transactions Found!
+                </span>
+                <span class="sub-text fw-400 grey">
+                    Create transactions from the homepage to view them here
+                </span>
+            </div>
+        }
+    </div>
+</div>

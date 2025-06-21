@@ -1,0 +1,20 @@
+
+<nav class="navbar mt-2">
+    <div class="container-fluid">
+        <div class="row w-100 justify-content-between align-items-center">
+            <div class="col">
+                <a class="navbar-brand pointer" (click)="redirect('home')">
+                    <img src="../../assets/images/wowpe-logo.svg" alt="Logo" width="100" height="44" class="d-inline-block align-text-top">
+                </a>
+            </div>
+            <div class="col">
+                <div class="row justify-content-end">
+                    @if(commonService.isLoggedIn){
+                        <a class="pointer transactions mw-mc links fw-500" (click)="redirect('transactions')">Transactions</a>
+                        <a class="pointer account mw-mc links fw-500" (click)="redirect('logout')">Logout</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
