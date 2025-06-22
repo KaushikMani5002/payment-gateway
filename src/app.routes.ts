@@ -1,4 +1,5 @@
 import {Routes} from '@angular/router';
+import { canActivateRoute } from './app/guards/canActivate.guard';
 
 export const routes: Routes = [
     {
@@ -12,11 +13,13 @@ export const routes: Routes = [
     },
     {
         path: 'home',
-        loadComponent: () => import('./app/components/home/home').then(c => c.Home)
+        loadComponent: () => import('./app/components/home/home').then(c => c.Home),
+        canActivate: [canActivateRoute]
     },
     {
         path: 'transactions',
-        loadComponent: () => import('./app/components/transactions/transactions').then(c => c.Transactions)
+        loadComponent: () => import('./app/components/transactions/transactions').then(c => c.Transactions),
+        canActivate: [canActivateRoute]
     },
     {
         path: '**',
